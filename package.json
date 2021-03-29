@@ -10,14 +10,16 @@
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "author": "Brad Traversy",
+  "author": "Kenneth Miller",
   "license": "MIT",
   "devDependencies": {
     "nodemon": "^1.14.6"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "concurrently": "^3.5.1",
     "cors": "^2.8.5",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "yahoo-stock-prices": "^1.1.0"
   }
 }

@@ -1,17 +1,51 @@
+import Login from './client/src/components/login';
+import Register from './client/src/components/register';
+import Analyze from './client/src/components/analyze';
+import axios from 'axios';
 const express = require('express');
 const cors = require('cors');
+const yahooStockPrices = require('yahoo-stock-prices');
+const {json} = require('body-parser');
 
 const app = express();
 
-app.get('/api/customers', cors(), (req, res) => {
-  const customers = [
-    {id: 1, firstName: 'John', lastName: 'Doe'},
-    {id: 2, firstName: 'Brad', lastName: 'Traversy'},
-    {id: 3, firstName: 'Mary', lastName: 'Swanson'},
+app.use(cors());
+app.use(json());
+
+app.post('/search', async(req, res) => {
+  console.log(req.body);
+  let stockData = await yahooStockPrices.getCurrentData(req.body);
+  let stockPrice = await yahooStockPrices.getCurrentPrice(req.body);
+  let stock = [
+    {ticker: req.body, data: stockData, price: stockPrice}
   ];
 
-  res.json(customers);
+  if (res.err) {console.log('error');}
+  else {res.send(stock)};
 });
+
+app.post('/login', async(req, res) => {
+  const username = req.body.username
+  const pass = req.body.password
+  
+});
+
+app.get('/login', (req, res) => {
+  res.send(Login);
+});
+
+app.get('/home', (req, res) => {
+  res.send(Home);
+});
+
+app.get('/register', (req, res) => {
+  res.send(Register);
+});
+
+app.get('/analyze', (req, res) => {
+  res.send(Analyze);
+});
+
 
 const port = 5000;
 
