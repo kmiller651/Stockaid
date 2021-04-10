@@ -4,6 +4,11 @@ import './App.css';
 import Search from './components/search';
 import Messagebox from './components/messagebox';
 import Public from './components/public';
+// import Login from './components/login';
+// import Register from './components/register';
+// import Analyze from './components/analyze';
+
+
 
 class App extends Component {
   constructor() {
@@ -11,7 +16,7 @@ class App extends Component {
     this.state = {
       logged: false,
       admin: false,
-      page: []
+      page: ''
     }
   }
 
@@ -19,11 +24,11 @@ class App extends Component {
     this.setState({page:<Public />})
   }
 
-  // pageHandler = (page) => {
-  //   fetch(page)
-  //   .then(res => res.json())
-  //   .then(data, () => {this.setState({page:data})})
-  // }
+  pageHandler = (pageClicked) => {
+    // fetch(page)
+    // .then(res => {this.setState({page:res})});
+    this.setState({page:pageClicked});
+  }
 
   render() {
     return (
@@ -32,16 +37,16 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">StockAid</h1>
           <div id='linkBar'>
-            <a href='/home'>Home</a>
-            <a href='/login'>Login</a>
-            <a href='/searchStocks'>Stock Search</a>
-            <a href='/register'>Register</a>
-            <a href='/analyze'>Stock Analyzer</a>
+            {/* <a onClick={ () => this.pageHandler()}>Home</a>
+            <a onClick={ () => this.pageHandler(<Login />)}>Login</a>
+            <a onClick={ () => this.pageHandler(<Search />)}>Stock Search</a>
+            <a onClick={ () => this.pageHandler(<Register />)}>Register</a>
+            <a onClick={ () => this.pageHandler(<Analyze />)}>Stock Analyzer</a> */}
           </div>
           <Messagebox />
         </header>
         <Search />
-        <div className="contentBox">
+        <div className="pageBox">
           {this.state.page}
         </div>
       </div>
