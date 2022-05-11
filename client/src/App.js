@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import {
+  Route,
+  NavLink,
+  HashRouter
+} from "react-router-dom";
 import logo from './Logo.JPG';
 import './App.css';
 import Search from './components/search';
@@ -6,7 +11,7 @@ import Messagebox from './components/messagebox';
 import Public from './components/public';
 // import Login from './components/login';
 // import Register from './components/register';
-// import Analyze from './components/analyze';
+import Analyze from './components/analyze';
 
 
 
@@ -20,36 +25,26 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
-    this.setState({page:<Public />})
-  }
-
-  pageHandler = (pageClicked) => {
-    // fetch(page)
-    // .then(res => {this.setState({page:res})});
-    this.setState({page:pageClicked});
-  }
-
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">StockAid</h1>
-          <div id='linkBar'>
-            {/* <a onClick={ () => this.pageHandler()}>Home</a>
-            <a onClick={ () => this.pageHandler(<Login />)}>Login</a>
-            <a onClick={ () => this.pageHandler(<Search />)}>Stock Search</a>
-            <a onClick={ () => this.pageHandler(<Register />)}>Register</a>
-            <a onClick={ () => this.pageHandler(<Analyze />)}>Stock Analyzer</a> */}
+      <HashRouter>
+        <div className="App">
+          <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <h1 className="App-title">StockAid</h1>
+            <ul className="header">
+              <li><NavLink to="/">Home</NavLink></li>
+              <li><NavLink to="/analyze">Analyze</NavLink></li>
+            </ul>
+            <Messagebox />
+          </header><br />
+          <div className="Content">
+            <Route exact path="/" component={Search}/>
+            <Route path="/analyze" component={Analyze}/>
           </div>
-          <Messagebox />
-        </header>
-        <Search />
-        <div className="pageBox">
-          {this.state.page}
+          <Public />
         </div>
-      </div>
+      </HashRouter>
     );
   }
 }

@@ -1,8 +1,6 @@
-
 /* TODO:
--Add page components for routers
 -Setup database connections with registration
--Add stock analyzation
+-Add stock analyzation graphics
 */
 
 const express = require('express');
@@ -10,6 +8,7 @@ const cors = require('cors');
 const yahooStockPrices = require('yahoo-finance');
 const {json} = require('body-parser');
 const mysql = require('mysql2');
+// const db = require('sqlconnect');
 
 const app = express();
 
@@ -18,64 +17,52 @@ app.use(json());
 
 //Gets the input from the searchbar and returns requested Stock Ticker info
 app.post('/search', async(req, res) => {
-  let today = new Date();
-  let year = today.getFullYear();
-  let month = today.getMonth();
-  let day = today.getDate() - 1;
-  console.log(year, month, day);
-  let stock = await yahooStockPrices.quote({
-    symbol: req.body.input,
-    modules: ['price', 'summaryDetail']
-  });
-
-  if (res.err) {console.log('error');}
-  else {res.json(stock)}
-});
-
-//User login information
-app.post('/login', async(req, res) => {
-  const username = req.body.username
-  const pass = req.body.password
+  try {
+    let stock = await yahooStockPrices.quote({
+      symbol: req.body.input,
+      modules: ['price', 'summaryDetail', 'recommendationTrend', 'defaultKeyStatistics', 'financialData']
+    });
+    res.json(stock);
+  } catch(err) {
+    res.json('Error');
+  }
   
 });
 
-// app.post('/register', async(req, res) => {
-//   const connection = mysql.createConnection({
-//     host: 'https://penguin.cairn.edu/phpMyAdmin/index.php',
-//     user: 'km651',
-//     password: 'KennethMiller',
-//     database: 'Stockaid'
-//   });
+//User login information
+// app.post('/login', async(req, res) => {
+//   const connection = db.connect();
+//   const username = req.body.username
+//   const pass = req.body.password
+//   connection.query('SELECT * FROM people WHERE userName = ? AND userPass = ?'),
+//   (err, results, fields) => {
+//     console.log(results);
+//     console.log(fields);
+//     if (results == 0) {
+//       res.json('Username or Password not valid.')
+//     } else {
+//       res.json('Logged in successfully!')
+//     }
+//   }
+  
+// });
 
-//   connection.query(  'SELECT * FROM `people` WHERE `userName` = ' + {req.body.username},
+// app.post('/register', async(req, res) => {
+//   const connection = db.connect();
+
+//   connection.query(  'SELECT * FROM `people` WHERE `userName` = ?'),
 //   (err, results, fields) => {
 //     console.log(results); // results contains rows returned by server
 //     console.log(fields); // fields contains extra meta data about results, if available
 //     if (results == 0) {
 //       connection.query( 'INSERT INTO people (userName, userPass, email, first_name, last_name)\
-//       VALUES ('+ {req.body.username}, {req.body.password}, {req.body.email}, {req.body.first_name}, {req.body.last_name} + ')',
+//       VALUES (?, ?, ?, ?, ?)',
 //        (err) => {console.log(err);})
 //     } else {
 //       res.json('Username already taken.')
 //     }
 //   });
   
-// });
-
-// app.get('/login', (req, res) => {
-//   res.send(<Login />);
-// });
-
-// app.get('/home', (req, res) => {
-//   res.send(<Home />);
-// });
-
-// app.get('/register', (req, res) => {
-//   res.send(<Register />);
-// });
-
-// app.get('/analyze', (req, res) => {
-//   res.send(<Analyze />);
 // });
 
 

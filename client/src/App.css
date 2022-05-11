@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  margin:auto;
 }
 
 .App-logo {
@@ -12,6 +13,7 @@
   padding: 20px;
   color: white;
   display: flexbox;
+  margin:auto;
 }
 
 .App-title {
@@ -22,6 +24,35 @@
   font-size: large;
 }
 
-a {
-  margin:10px;
+ul.header li {
+  display: inline;
+  list-style-type: none;
+  margin: auto;
+}
+ul.header {
+  background-color: #111;
+  padding: 0;
+}
+ul.header li a {
+  color: #FFF;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 20px;
+  display: inline-block;
+}
+.content {
+  background-color: #FFF;
+  padding: 20px;
+}
+.content h2 {
+  padding: 0;
+  margin: auto;
+}
+.content li {
+  margin-bottom: 10px;
+}
+body {
+  background-color: #FFCC00;
+  padding: 20px;
+  margin: 0;
 }
